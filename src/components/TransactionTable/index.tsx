@@ -1,3 +1,5 @@
+import { AnimatePresence } from "framer-motion";
+
 import { TransactionItem } from '../TransactionItem';
 
 import { useTransaction } from '../../hooks/useTransaction';
@@ -6,7 +8,7 @@ import { Container } from './styles';
 
 export function TransactionTable() {
   const { transactions } = useTransaction();
-  
+
   return (
     <Container>
       <table>
@@ -20,13 +22,15 @@ export function TransactionTable() {
         </thead>
 
         <tbody>
-          {transactions.map((transaction, index) => (
-            <TransactionItem 
-              key={transaction.id}
-              transaction={transaction}
-              index={index}
-            />
-          ))}
+          <AnimatePresence>
+            {transactions.map((transaction, index) => (
+              <TransactionItem 
+                key={transaction.id}
+                transaction={transaction}
+                index={index}
+              />
+            ))}
+          </AnimatePresence>
         </tbody>
       </table>
     </Container>

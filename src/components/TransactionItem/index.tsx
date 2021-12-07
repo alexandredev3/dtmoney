@@ -1,4 +1,7 @@
-import type { Transaction } from '../../contexts/TransactionContext';
+import type { Transaction } from "../../contexts/TransactionContext";
+import { useTransaction } from "../../hooks/useTransaction";
+
+import trashIcon from "../../assets/trash-icon.svg";
 
 import { Cash } from "../Cash";
 
@@ -7,9 +10,20 @@ import { Container } from "./styles";
 type TransactionItemProps = {
   transaction: Transaction;
   index: number;
-}
+};
 
 export function TransactionItem({ transaction, index }: TransactionItemProps) {
+  const { deleteTransaction } = useTransaction();
+
+  async function handleDeleteTransaction() {
+    try {
+      await deleteTransaction(transaction.id);
+    } catch (err) {
+      console.error(err);
+      alert("Algo deu errado, tente novamente...");
+    }
+  }
+
   return (
     <Container
       initial={{
@@ -25,6 +39,10 @@ export function TransactionItem({ transaction, index }: TransactionItemProps) {
         ease: "easeOut",
         delay: index * 0.3,
       }}
+      exit={{
+        opacity: 0,
+        translateY: -20,
+      }}
     >
       <td>{transaction.title}</td>
       <td className={transaction.type}>
@@ -36,6 +54,11 @@ export function TransactionItem({ transaction, index }: TransactionItemProps) {
         {new Intl.DateTimeFormat("pt-BR").format(
           new Date(transaction.createdAt)
         )}
+      </td>
+      <td className="button-wrapper">
+        <button type="button" onClick={handleDeleteTransaction}>
+          <img src={trashIcon} alt="Delete transaction" />
+        </button>
       </td>
     </Container>
   );

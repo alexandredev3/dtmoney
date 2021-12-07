@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { transparentize } from 'polished';
 
 export const Container = styled(motion.tr)`
   td {
@@ -19,6 +20,27 @@ export const Container = styled(motion.tr)`
 
     &.withdrawn {
       color: var(--red);
+    }
+
+    &.button-wrapper {
+      > button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 0.7rem 0.6rem;
+        border: 0;
+        border-radius: 4px;
+        background: none;
+
+        transition: filter 0.2s;
+
+        &:hover {
+          filter: brightness(0.9);
+        }
+
+        background: ${transparentize(0.85, '#E62E4D')};
+      }
     }
   }
 `;

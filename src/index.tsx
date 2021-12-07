@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createServer, Model } from 'miragejs';
+import { createServer, Model, Response } from 'miragejs';
 
 import { App } from './App';
 
@@ -51,6 +51,20 @@ createServer({
       // transaction -> Model
       return schema.create('transaction', data);
     });
+
+    this.delete('/transactions/:id', (schema, request) => {
+      const id = request.params.id;
+
+      if (!id) {
+        throw new Error('id is undefined');
+      } 
+
+      schema.findBy('transaction', { 
+        id 
+      })?.destroy();
+
+      return new Response(204);
+    })
   }
 });
 

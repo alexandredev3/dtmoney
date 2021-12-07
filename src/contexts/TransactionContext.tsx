@@ -23,6 +23,7 @@ interface TransactionContext {
   transactions: Transaction[];
   lastTransaction: Transaction | null;
   createNewTransaction: (transactionInput: TransactionInput) => Promise<void>;
+  deleteTransaction: (transactionId: number) => Promise<void>;
 }
 
 export const TransactionContext = createContext<TransactionContext>(
@@ -55,11 +56,29 @@ export function TransactionProvider({ children }: TransactionProviderProps) {
     }
   }
 
+  async function deleteTransaction(id: number) {
+    try {
+      const transaction = transactions.find(transaction => transaction.id === id);
+
+      if (!transaction) throw new Error('id is undefined');
+
+      const transactionsFiltered = transactions.filter(transaction => transaction.id !== id);
+
+      setLastTransaction(transaction);
+      setTransactions(transactionsFiltered);
+
+      await api.delete(`/transactions/${id}`);
+    } catch (err) {
+      throw new Error(String(err));
+    }
+  }
+
   return (
     <TransactionContext.Provider value={{
       transactions,
       lastTransaction,
       createNewTransaction,
+      deleteTransaction,
     }}>
       {children}
     </TransactionContext.Provider>
