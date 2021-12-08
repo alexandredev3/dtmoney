@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { transparentize } from 'polished';
 
 export const Container = styled(motion.tr)`
   td {
@@ -24,6 +23,7 @@ export const Container = styled(motion.tr)`
 
     &.button-wrapper {
       > button {
+        width: 0px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -38,8 +38,6 @@ export const Container = styled(motion.tr)`
         &:hover {
           filter: brightness(0.9);
         }
-
-        background: ${transparentize(0.85, '#E62E4D')};
       }
     }
   }
