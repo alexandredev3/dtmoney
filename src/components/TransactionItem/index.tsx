@@ -1,5 +1,6 @@
 import type { Transaction } from "../../contexts/TransactionContext";
 import { useTransaction } from "../../hooks/useTransaction";
+import { useAsyncLoad } from '../../hooks/useAsyncLoad';
 
 import trashIcon from "../../assets/trash-icon.svg";
 
@@ -14,6 +15,7 @@ type TransactionItemProps = {
 
 export function TransactionItem({ transaction, index }: TransactionItemProps) {
   const { deleteTransaction } = useTransaction();
+  const { onFetch, isLoading } = useAsyncLoad(handleDeleteTransaction);
 
   async function handleDeleteTransaction() {
     try {
@@ -43,20 +45,21 @@ export function TransactionItem({ transaction, index }: TransactionItemProps) {
         opacity: 0,
         translateY: -20,
       }}
+      isLoading={isLoading}
     >
       <td>{transaction.title}</td>
       <td className={transaction.type}>
         {transaction.type === "withdrawn" && "-"}{" "}
         <Cash amount={transaction.amount} />
       </td>
-      <td>{transaction.category}</td>
-      <td>
+      <td className="category">{transaction.category}</td>
+      <td className="createdAt">
         {new Intl.DateTimeFormat("pt-BR").format(
           new Date(transaction.createdAt)
         )}
       </td>
       <td className="button-wrapper">
-        <button type="button" onClick={handleDeleteTransaction}>
+        <button type="button" onClick={onFetch} disabled={isLoading}>
           <img src={trashIcon} alt="Delete transaction" />
         </button>
       </td>

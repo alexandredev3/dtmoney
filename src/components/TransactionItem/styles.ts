@@ -1,24 +1,31 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { transparentize } from 'polished';
 
-export const Container = styled(motion.tr)`
+type ContainerProps = {
+  isLoading: boolean;
+}
+
+export const Container = styled(motion.tr)<ContainerProps>`
   td {
     padding: 1rem 2rem;
     border: 0;
     background: var(--shape);
-    color: var(--text-body);
+    color: ${(props) => props.isLoading ? transparentize(0.4, '#969CB3') : '#969CB3'};
     border-radius: 0.25rem;
 
+    cursor: ${(props) => props.isLoading ? 'not-allowed' : 'default'};
+
     &:first-child {
-      color: var(--text-title);
+      color: ${(props) => props.isLoading ? transparentize(0.4, '#363F5F') : '#363F5F'}
     }
 
     &.deposit {
-      color: var(--green);
+      color: ${(props) => props.isLoading ? transparentize(0.4, '#33CC95') : '#33CC95'}
     }
 
     &.withdrawn {
-      color: var(--red);
+      color: ${(props) => props.isLoading ? transparentize(0.4, '#E62E4D') : '#E62E4D'}
     }
 
     &.button-wrapper {
