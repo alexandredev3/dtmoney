@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: process.env.REACT_APP_URL + "/api"
+  baseURL: "https://" + process.env.VERCEL_URL + "/api"
 });
