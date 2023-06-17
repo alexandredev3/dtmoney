@@ -26,4 +26,12 @@ export const Container = styled(motion.div)`
     background: var(--green);
     color: #FFF;
   }
+
+  @media (max-width: 900px) {
+    padding: 1rem 1.5rem;
+
+    > strong {
+      margin-top: 0.2rem;
+    }
+  }
 `;

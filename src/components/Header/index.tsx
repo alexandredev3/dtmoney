@@ -1,3 +1,5 @@
+import MediaQuery from 'react-responsive';
+
 import logoImg from '../../assets/logo.svg';
 
 import { Container, Content } from './styles';
@@ -11,9 +13,16 @@ export function Header({ onOpenNewTransactionModal }: HeaderProps) {
     <Container>
       <Content>
         <img src={logoImg} alt="dt money" />
-        <button onClick={onOpenNewTransactionModal}>
-          Nova transação
-        </button>
+        <MediaQuery minWidth={900}>
+          <button onClick={onOpenNewTransactionModal}>
+            Nova transação
+          </button>
+        </MediaQuery>
+        <MediaQuery maxWidth={900}>
+          <button onClick={onOpenNewTransactionModal} className="new_transaction_mobile_button">
+            +
+          </button>
+        </MediaQuery>
       </Content>
     </Container>
   );
