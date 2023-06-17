@@ -13,12 +13,12 @@ export function Header({ onOpenNewTransactionModal }: HeaderProps) {
     <Container>
       <Content>
         <img src={logoImg} alt="dt money" />
-        <MediaQuery minWidth={900}>
+        <MediaQuery minWidth={600}>
           <button onClick={onOpenNewTransactionModal}>
             Nova transação
           </button>
         </MediaQuery>
-        <MediaQuery maxWidth={900}>
+        <MediaQuery maxWidth={600}>
           <button onClick={onOpenNewTransactionModal} className="new_transaction_mobile_button">
             +
           </button>
